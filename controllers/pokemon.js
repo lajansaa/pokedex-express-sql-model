@@ -21,7 +21,9 @@ const get = (db) => {
 
 const updateForm = (db) => {
   return (request, response) => {
-    // TODO: Add logic here
+    db.pokemon.get(request.params.id, (error, queryResult) => {
+      response.render('pokemon/edit', { pokemon: queryResult.rows[0] });
+    })
   };
 };
 
@@ -32,7 +34,7 @@ const update = (db) => {
 };
 
 const createForm = (request, response) => {
-  response.render('pokemon/new');
+  response.render('pokemon/new', {user_id: request.cookies['userid']});
 };
 
 const create = (db) => {

@@ -45,10 +45,33 @@ const loginForm = (request, response) => {
   response.render('user/login');
 };
 
-const login = (request, response) => {
-  // TODO: Add logic here
-  // Hint: All SQL queries should happen in the corresponding model file
-  // ie. in models/user.js - which method should this controller call on the model?
+const login = (db) => {
+  return (request, response) => {
+    db.user.login(request.body, (error, queryResult) => {
+      if (queryResult.status == true) {
+        response.cookie('loggedIn', true);
+        response.cookie('username', request.body.name);
+        response.cookie('userid', queryResult.user_id);
+        response.redirect(301, '/');
+      } else {
+        response.send('Invalid Name/Password');
+      }
+    })
+  };
+};
+
+const userAccount = (db) => {
+  return (request, response) => {
+    db.user.userAccount(request.params.id, (error, queryResult) => {
+      const context = {
+        name: queryResult[0].name,
+        email: queryResult[0].email,
+        pokemon: queryResult
+      }
+      console.log(context);
+      response.render('user/user', context);
+    })
+  };
 };
 
 /**
@@ -61,5 +84,6 @@ module.exports = {
   create,
   logout,
   loginForm,
-  login
+  login,
+  userAccount
 };

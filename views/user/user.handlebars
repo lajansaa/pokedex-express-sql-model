@@ -6,15 +6,21 @@
 </head>
 <body>
   <ul class="user-list">
+    <p>Account Info</p>
     <li class="user-attribute">
-      id: {{user.id}}
+      name: {{name}}
     </li>
     <li class="user-attribute">
-      name: {{user.name}}
+      email: {{email}}
     </li>
+  </ul>
+  <ul class="user-list">
+    <p>Pokemons Created</p>
+    {{#each pokemon}}
     <li class="user-attribute">
-      email: {{user.email}}
+      {{this.pokemon_name}}
     </li>
+    {{/each}}
   </ul>
 </body>
 </html>

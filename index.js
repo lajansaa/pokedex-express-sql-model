@@ -36,13 +36,16 @@ require('./routes')(app, db);
 app.get('/', (request, response) => {
   let loggedIn = request.cookies['loggedIn'];
   let username = request.cookies['username'];
+  let userid = request.cookies['userid'];
+  let queryString = `SELECT * FROM pokemons`;
 
-  db.pool.query('SELECT * FROM pokemons', (error, queryResult) => {
+  db.pool.query(queryString, (error, queryResult) => {
     if (error) console.error('error!', error);
 
     let context = {
       loggedIn: loggedIn,
       username: username,
+      userid: userid,
       pokemon: queryResult.rows
     };
 

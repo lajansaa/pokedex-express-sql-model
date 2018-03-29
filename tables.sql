@@ -15,3 +15,10 @@ CREATE TABLE IF NOT EXISTS users (
   email varchar(255),
   password varchar(255)
 );
+
+-- create user_pokemons table
+CREATE TABLE IF NOT EXISTS user_pokemons (
+  id SERIAL PRIMARY KEY,
+  pokemon_id INT,
+  user_id INT
+);
